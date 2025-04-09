@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.examples.org/ontologies/VetClinic.owl/"
+     xml:base="http://www.examples.org/ontologies/VetClinic.owl/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.examples.org/ontologies/VetClinic.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#affects -->
+
+    <owl:ObjectProperty rdf:about="http://www.examples.org/ontologies/VetClinic.owl#affects">
+        <rdfs:domain rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#MedicalCondition"/>
+        <rdfs:range rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BiologicalObject"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#hasPart -->
+
+    <owl:ObjectProperty rdf:about="http://www.examples.org/ontologies/VetClinic.owl#hasPart">
+        <rdfs:domain rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Object"/>
+        <rdfs:range rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Object"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#suffersFrom"/>
+            <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#affects"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#suffersFrom -->
+
+    <owl:ObjectProperty rdf:about="http://www.examples.org/ontologies/VetClinic.owl#suffersFrom">
+        <rdfs:domain rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+        <rdfs:range rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#MedicalCondition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#hasMass -->
+
+    <owl:DatatypeProperty rdf:about="http://www.examples.org/ontologies/VetClinic.owl#hasMass">
+        <rdfs:domain rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Object"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>The mass of something in kgs.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Animal -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Animal">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BiologicalObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BodyPart"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasMass"/>
+                <owl:allValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BodyPart"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#BiologicalObject -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#BiologicalObject">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Object"/>
+        <rdfs:comment>A living organism or part of one.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Bird -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Bird">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Wing"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Mammal"/>
+        <owl:disjointWith rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Reptile"/>
+        <rdfs:comment>Animal of scientific class Aves.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#BodyPart -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#BodyPart">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BiologicalObject"/>
+        <rdfs:comment>Part of an organism&apos;s body.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#BrokenWing -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#BrokenWing">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Injury"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#affects"/>
+                <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Wing"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#affects"/>
+                <owl:allValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Wing"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Canary -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Canary">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Bird"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasMass"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.01</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Injury -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Injury">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#MedicalCondition"/>
+        <rdfs:comment>Damage to the integrity of the tissues of a biological organism, caused by other factors than the presence of organisms like pathogens.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Mammal -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Mammal">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+        <owl:disjointWith rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Reptile"/>
+        <rdfs:comment>Animal of scientific class Mammalia.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#MedicalCondition -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#MedicalCondition">
+        <owl:disjointWith rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Object"/>
+        <rdfs:comment>A departure from a state of health for an animal.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Object -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Object">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasMass"/>
+                <owl:allValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</xsd:minExclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasMass"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A physical thing made of matter, possessing mass and occupying a place in space, considered as a thing which persists over and is wholly present throughout the duration of its lifetime.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Reptile -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Reptile">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+        <rdfs:comment>Animal of scientific class Reptilia.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Wing -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Wing">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BodyPart"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#Cat -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#Cat">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Mammal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#Dog -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#Dog">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Mammal"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Mammal"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Wing"/>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

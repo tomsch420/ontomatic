@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.examples.org/ontologies/VetClinicExamples.owl/"
+     xml:base="http://www.examples.org/ontologies/VetClinicExamples.owl/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl">
+        <owl:imports rdf:resource="http://www.examples.org/ontologies/VetClinic.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#Mammal -->
+
+    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Mammal">
+        <owl:equivalentClass rdf:resource="http://www.examples.org/ontologies/VetClinicExamples.owl#QueryForMammals"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts">
+        <rdfs:comment>These would not be part of the ontology itself, they are given here as examples for some queries.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#BodilessAnimal -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#BodilessAnimal">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BodyPart"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Sanity check with existential restrictions (something is asserted not to exist, when it should be there.)
+
+Suppose in our records there is an animal about which we know it has no head, no legs, no tail, nothing. But an animal should have some body (part), so we must have made a mistake somewhere.
+
+Running the reasoner should reveal this class as equivalent to owl:Nothing, i.e. it is unsatisfiable and there should be no individuals belonging to it. If we have a record of such an animal, we have a mistake somewhere.
+
+Technically, this example should have created an animal individual and explicitly asserted a lack of body parts. Protege is a bit funny -- hangs -- when an ontology is inconsistent though so instead the example was written as if the animal individual was turned into a class, defined by the properties of this individual. We can look into how to implement this properly later, but for now the message of the example hopefully remains:
+
+-- it is possible to check whether some piece of data makes sense by comparing it with the ontology.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#BrokenWingAsBodyPart -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#BrokenWingAsBodyPart">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Bird"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                        <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BrokenWing"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Sanity check with universal restrictions (some thing is related to entities outside of the relation&apos;s scope for that thing):
+
+Some errors in connecting entities to each other may be a bit more subtle.
+
+Suppose we have a bird patient, and it suffers from a broken wing. The terminology is a bit unfortunate here -- whoever enters the data about this bird might think they need to put the &quot;broken wing&quot; individual in the slot describing the bird&apos;s wings. However, &quot;broken wing&quot;, for us, is not a physical object -- it is a condition that affects a physical object.
+
+Running the reasoner should reveal this class as equivalent to owl:Nothing, i.e. it is unsatisfiable and there should be no individuals belonging to it. If we have a record of such a bird, we have a mistake somewhere.
+
+Technically, this example should have created a bird individual and a broken wing individual, and placed a hasPart relation between them. Protege is a bit funny -- hangs -- when an ontology is inconsistent though so instead the example was written as if the bird with broken wing individual was turned into a class, defined by the properties of this individual. We can look into how to implement this properly later, but for now the message of the example hopefully remains:
+
+-- it is possible to check whether some piece of data makes sense by comparing it with the ontology.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#CatWithBrokenWing -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#CatWithBrokenWing">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#Cat"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#suffersFrom"/>
+                        <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BrokenWing"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Sanity check with disjointness (and existential restrictions -- something is implied to exist, which shouldn&apos;t be there):
+
+Suppose we have a record that one of our patients is a cat suffering from a broken wing. Does this seem plausible given what we know?
+
+Running the reasoner should reveal this class as equivalent to owl:Nothing, i.e. it is unsatisfiable and there should be no individuals belonging to it. If we have a record of such a cat, we have a mistake somewhere.
+
+Technically, this example should have created a cat individual and a broken wing individual, and placed a suffersFrom relation between them. Protege is a bit funny -- hangs -- when an ontology is inconsistent though so instead the example was written as if the cat with broken wing individual was turned into a class, defined by the properties of this individual. We can look into how to implement this properly later, but for now the message of the example hopefully remains:
+
+-- it is possible to check whether some piece of data makes sense by comparing it with the ontology.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#QueryForMammals -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#QueryForMammals">
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Query rewriting with taxonomies:
+
+(We actually have this concept in the base ontology but just to keep the queries all in one spot, we redefine it here.)
+
+The classic example of query rewriting is, suppose you are looking for Mammals in a database containing entries about animals. There is no explicit mention as to whether each animal is a mammal or not, but you do know, for each animal, what its species is, and you also know what species are mammals.
+
+Then, it is possible to rewrite the query by replacing Mammal in the query with a disjunction over all subclasses of it. You can see these subclasses by running the reasoner and changing the class hierarchy view from asserted to inferred.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#VeryHeavyDog -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#VeryHeavyDog">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#Dog"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasMass"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000000.0</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Sanity check with value restrictions (some numeric value is out of allowed bounds).
+
+Suppose we have a record that one of our patients is a dog who weighs 1 million kilograms. Does this seem plausible given what we know?
+
+Running the reasoner should reveal this class as equivalent to owl:Nothing, i.e. it is unsatisfiable and there should be no individuals belonging to it. If we have a record of such a dog, we have a mistake somewhere.
+
+Technically, this example should have created a dog individual and asserted it hasMass 1e6f. Protege is a bit funny -- hangs -- when an ontology is inconsistent though so instead the example was written as if the dog individual was turned into a class, defined by the properties of this individual. We can look into how to implement this properly later, but for now the message of the example hopefully remains:
+
+-- it is possible to check whether some piece of data makes sense by comparing it with the ontology, and even more specifically, to do so by comparison to some numeric restrictions.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinicExamples.owl#WingedThing -->
+
+    <owl:Class rdf:about="http://www.examples.org/ontologies/VetClinicExamples.owl#WingedThing">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                <owl:someValuesFrom rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Wing"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#QueryConcepts"/>
+        <rdfs:comment>Query rewriting with existential restrictions (a property of a thing can be implied, therefore the thing should also be caught when looking for that property even if it is not explicitly asserted):
+
+Suppose we are looking for animals with wings. Even if we don&apos;t have explicit records of an animal&apos;s wings, we may infer it must have some if it is, e.g., a bird.
+
+Running the reasoner, and switching the class hierarchy display from asserted to inferred, will reveal that birds are winged things, hence canaries are too, and therefore completion_Canary is also a winged thing.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Nothing -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Nothing">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.examples.org/ontologies/VetClinic.owl#Animal"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#hasPart"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#BodyPart"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.examples.org/ontologies/VetClinic.owl#completion_Canary -->
+
+    <owl:NamedIndividual rdf:about="http://www.examples.org/ontologies/VetClinic.owl#completion_Canary">
+        <rdf:type rdf:resource="http://www.examples.org/ontologies/VetClinic.owl#Canary"/>
+        <rdfs:comment>Data completion with value restrictions.
+
+This example is a bit forced, but for the fun of it, lets assume all canaries in the world weigh exactly 10 grams. Then we don&apos;t need to explicitly record their mass -- if we know something is a canary, we know it weighs 10 grams.
+
+Reasoning (with Pellet) should infer a mass of 0.01f.
+
+(Hermit does not seem to make this inference unfortunately ...)</rdfs:comment>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
