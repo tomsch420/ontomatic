@@ -26,7 +26,11 @@ class ParserTestCase(unittest.TestCase):
         dependency_graph = OntologyDependencyGraph(self.ontology)
         # dependency_graph.display_graph()
 
-        print(dependency_graph.class_to_dataclass(all_classes[2]))
+        dependency_graph.create_ontology_classes()
+        dependency_graph.create_relations()
+
+        out_path = os.path.join(os.path.dirname(__file__), "..", "resources", "output.py")
+        dependency_graph.to_python_file(out_path)
 
 if __name__ == '__main__':
     unittest.main()
