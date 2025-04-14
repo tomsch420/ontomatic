@@ -43,6 +43,16 @@ class OntologyRelation:
     def as_dataclass(self) -> str:
         return f"@dataclass\nclass {self.name}:\n    left: {self.left}\n    right: {self.right}"
 
+@dataclass
+class OntologyQuery:
+    """
+    Class to represent an ontology query that is expressed by an ontological concept.
+    """
+    restriction: Type[Thing]
+
+    def to_sql(self):
+        print(self.restriction)
+
 
 
 class OntologyDependencyGraph:

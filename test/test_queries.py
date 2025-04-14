@@ -11,29 +11,22 @@ vet_clinic_examples_path = os.path.join(os.path.dirname(__file__), "..", 'resour
 
 vet_clinic_py_path = os.path.join(os.path.dirname(__file__), "..", "example", "vet_clinic.py")
 
-
-class ParserTestCase(unittest.TestCase):
-
-    ontology: Ontology
+class QueryTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         """
         Class-level setup to load ontology from resources using owlready2.
         """
-        cls.ontology = get_ontology(f"file://{vet_clinic_ontology_path}").load()
+        vet_clinic = get_ontology(f"file://{vet_clinic_ontology_path}").load()
+        cls.ontology = get_ontology(f"file://{vet_clinic_examples_path}").load()
 
     def test_graph(self):
         all_classes = list(self.ontology.classes())
-        dependency_graph = OntologyDependencyGraph(self.ontology)
-        # dependency_graph.display_graph()
-
-        dependency_graph.create_ontology_classes()
-        dependency_graph.create_relations()
-
-        out_path = os.path.join(os.path.dirname(__file__), "..", "example", "vet_clinic.py")
-        dependency_graph.to_python_file(out_path)
-
+        clazz = list(self.ontology.classes())[2]
+        query = OntologyQuery(clazz)
+        print(clazz.equivalent_to)
+        
 
 if __name__ == '__main__':
     unittest.main()
